@@ -18,4 +18,8 @@ public class ProductService {
     }
 
 
+    public Product getProductById(Integer id) {
+        //return repository.findById(id).orElse(new Product());
+        return repository.findById(id).get();
+    }
 }

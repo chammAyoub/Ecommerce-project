@@ -3,11 +3,9 @@ package com.chammakh.Ecommerce_project.controller;
 
 import com.chammakh.Ecommerce_project.model.Product;
 import com.chammakh.Ecommerce_project.service.ProductService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,14 +17,14 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @RequestMapping("/")
-    public String returnSomething(){
-        return "This is Home".toUpperCase();
-    }
-
     @GetMapping("/products")
     public List<Product> getAllProducts(){
         return service.getAllProducts();
+    }
+
+    @GetMapping("/product/{id}")
+    public Product getProductById(@PathVariable int id){
+        return service.getProductById(id);
     }
 
 }

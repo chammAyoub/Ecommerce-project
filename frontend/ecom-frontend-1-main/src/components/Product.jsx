@@ -20,10 +20,6 @@ const [product, setProduct] = useState(null);
     fetchProduct();
   }, [id]);
 
-
-
-
-
   if (!product) {
     return (
       <h2 className="text-center" style={{ padding: "10rem" }}>
@@ -57,10 +53,10 @@ const [product, setProduct] = useState(null);
                 {product.stockQuantity}
               </i>
             </h6>
-            <p className="release-date">
+            <div className="release-date">
               <h6>Product listed on:</h6>
-              <i>{product.releaseDate}</i>
-            </p>
+              <p>{product.release_date}</p>
+            </div>
           </div>
           <div className="update-button ">
             <button
