@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Home from "./Home";
+import Home from "./Home"
 import axios from "axios";
 
 const Navbar = ({ onSelectCategory, onSearch }) => {
@@ -9,6 +9,8 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
   };
 
   const [theme, setTheme] = useState(getInitialTheme());
+
+
 
   const toggleTheme = () => {
     const newTheme = theme === "dark-theme" ? "light-theme" : "dark-theme";
@@ -20,13 +22,14 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     document.body.className = theme;
   }, [theme]);
 
+
   return (
     <>
       <header>
         <nav className="navbar navbar-expand-lg fixed-top">
           <div className="container-fluid">
             <a className="navbar-brand" href="https://telusko.com/">
-              Telusko
+              E-commerce Store
             </a>
             <button
               className="navbar-toggler"
@@ -56,15 +59,17 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                 </li>
 
                 {/* < className="nav-item dropdown"> */}
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Categories
-                </a>
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="/"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Categories
+                  </a>
+
+
 
                 <li className="nav-item"></li>
               </ul>
@@ -76,14 +81,14 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                 )}
               </button>
               <div className="d-flex align-items-center cart">
-                {/* <a href="/cart" className="nav-link text-dark"> */}
-                <i
-                  className="bi bi-cart me-2"
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  Cart
-                </i>
-                {/* </a> */}
+                <a href="/cart" className="nav-link text-dark">
+                  <i
+                    className="bi bi-cart me-2"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    Cart
+                  </i>
+                </a>
 
                 <input
                   className="form-control me-2"
