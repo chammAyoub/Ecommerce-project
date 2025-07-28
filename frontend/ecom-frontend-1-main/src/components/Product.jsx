@@ -87,22 +87,22 @@ const Product = () => {
             <span>{"$" + product.price}</span>
             <button
               className={`cart-btn ${
-                !product.productAvailable ? "disabled-btn" : ""
+                !product.availability ? "disabled-btn" : ""
               }`}
               onClick={handlAddToCart}
-              disabled={!product.productAvailable}
+              disabled={!product.availability}
             >
-              {product.productAvailable ? "Add to cart" : "Out of Stock"}
+              {product.availability ? "Add to cart" : "Out of Stock"}
             </button>
             <h6>
               Stock Available :{" "}
               <i style={{ color: "green", fontWeight: "bold" }}>
-                {product.stockQuantity}
+                {product.quantity}
               </i>
             </h6>
             <p className="release-date">
               <h6>Product listed on:</h6>
-              <i> {new Date(product.releaseDate).toLocaleDateString()}</i>
+              <i> {new Date(product.release_date).toLocaleDateString()}</i>
             </p>
           </div>
           {/* <div className="update-button ">
