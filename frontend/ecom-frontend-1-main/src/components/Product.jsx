@@ -1,13 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../Context/Context";
 import axios from "../axios";
-// import UpdateProduct from "./UpdateProduct";
+
 const Product = () => {
   const { id } = useParams();
-  const { data, addToCart, removeFromCart, cart, refreshData } =
-    useContext(AppContext);
+  const { addToCart, removeFromCart, refreshData } = useContext(AppContext);
   const [product, setProduct] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
@@ -15,9 +13,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/product/${id}`
-        );
+        const response = await axios.get(`http://localhost:8080/api/product/${id}`);
         setProduct(response.data);
         if (response.data.imageName) {
           fetchImage();
@@ -28,11 +24,15 @@ const Product = () => {
     };
 
     const fetchImage = async () => {
-      const response = await axios.get(
-        `http://localhost:8080/api/product/${id}/image`,
-        { responseType: "blob" }
-      );
-      setImageUrl(URL.createObjectURL(response.data));
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/product/${id}/image`,
+          { responseType: "blob" }
+        );
+        setImageUrl(URL.createObjectURL(response.data));
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
     };
 
     fetchProduct();
@@ -42,7 +42,6 @@ const Product = () => {
     try {
       await axios.delete(`http://localhost:8080/api/product/${id}`);
       removeFromCart(id);
-      console.log("Product deleted successfully");
       alert("Product deleted successfully");
       refreshData();
       navigate("/");
@@ -55,10 +54,11 @@ const Product = () => {
     navigate(`/product/update/${id}`);
   };
 
-  const handlAddToCart = () => {
+  const handleAddToCart = () => {
     addToCart(product);
     alert("Product added to cart");
   };
+
   if (!product) {
     return (
       <h2 className="text-center" style={{ padding: "10rem" }}>
@@ -66,6 +66,7 @@ const Product = () => {
       </h2>
     );
   }
+
   return (
     <>
       <div className="containers">
@@ -86,26 +87,25 @@ const Product = () => {
           <div className="product-price">
             <span>{"$" + product.price}</span>
             <button
-              className={`cart-btn ${
-                !product.availability ? "disabled-btn" : ""
-              }`}
-              onClick={handlAddToCart}
+              className={`cart-btn ${!product.availability ? "disabled-btn" : ""}`}
+              onClick={handleAddToCart}
               disabled={!product.availability}
             >
               {product.availability ? "Add to cart" : "Out of Stock"}
             </button>
             <h6>
-              Stock Available :{" "}
+              Stock Available:{" "}
               <i style={{ color: "green", fontWeight: "bold" }}>
                 {product.quantity}
               </i>
             </h6>
             <p className="release-date">
               <h6>Product listed on:</h6>
-              <i> {new Date(product.release_date).toLocaleDateString()}</i>
+              <i>{new Date(product.release_date).toLocaleDateString()}</i>
             </p>
           </div>
-          {/* <div className="update-button ">
+
+          <div className="update-button">
             <button
               className="btn btn-primary"
               type="button"
@@ -113,7 +113,6 @@ const Product = () => {
             >
               Update
             </button>
-
             <button
               className="btn btn-primary"
               type="button"
@@ -121,7 +120,7 @@ const Product = () => {
             >
               Delete
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </>
